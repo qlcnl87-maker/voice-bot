@@ -85,7 +85,7 @@ def get_chat_response(api_key, text_input):
         now_info = datetime.now().strftime("%Y년 %m월 %d일 %H시 %M분 %S초")
         enriched_prompt = f"현재 시각은 {now_info}입니다. 이 시점을 기준으로 답변해주세요: {text_input}"
         
-        model = genai.GenerativeModel("gemini-2.0-flash-exp")
+        model = genai.GenerativeModel("gemini-2.0-flash")
         response = model.generate_content(enriched_prompt)
         return response.text
     except Exception as e:
@@ -95,7 +95,7 @@ def process_voice_to_text(api_key, audio_bytes):
     """음성을 텍스트로 변환 (STT)"""
     try:
         genai.configure(api_key=api_key)
-        model = genai.GenerativeModel("gemini-2.0-flash-exp")
+        model = genai.GenerativeModel("gemini-2.0-flash")
         response = model.generate_content([
             {"mime_type": "audio/webm", "data": audio_bytes}, 
             "음성을 텍스트로만 정확히 받아쓰기해줘."
@@ -205,4 +205,5 @@ if st.session_state.history:
             <div style="font-weight: bold; color: #007bff;">Q: {item['q']}</div>
             <div style="margin-top: 5px;"><b>A:</b> {item['a']}</div>
         </div>
+
         """, unsafe_allow_html=True)
